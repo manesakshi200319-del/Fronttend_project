@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>amazan.com</title>
+<style>
+  :root{
+    --dark: #131921;
+    --dark2: #232f3e;
+    --accent: #febd69;
+    --accent2: #f3a847;
+    --blue: #007185;
+    --text: #0f1111;
+    --border: #d5d9d9;
+    --price: #B12704;
+    --success: #067d62;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:#eaeded;
+  }
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- HEADER ---------- */
+  header.topbar{
+    background: var(--dark);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:10px 16px;
+    gap:14px;
+    flex-wrap: nowrap;
+  }
+  .logo{
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+    padding:8px 10px;
+    border:1px solid transparent;
+    border-radius:3px;
+    white-space:nowrap;
+  }
+  .logo span{color:var(--accent);}
+  .logo:hover{border-color:#fff;cursor:pointer;}
+
+  .deliver{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    padding:8px;
+    border:1px solid transparent;
+    border-radius:3px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .deliver:hover{border-color:#fff;}
+  .deliver .pin{font-size:18px;}
+  .deliver-text b{font-size:14px;}
+
+  .search-bar{
+    flex:1;
+    display:flex;
+    height:40px;
+    border-radius:4px;
+    overflow:hidden;
+    min-width:140px;
+  }
+  .search-select{
+    background:#f3f3f3;
+    border:none;
+    padding:0 8px;
+    font-size:12px;
+    color:#555;
+  }
+  .search-input{
+    flex:1;
+    border:none;
+    padding:0 10px;
+    font-size:15px;
+    outline:none;
+  }
+  .search-btn{
+    background:var(--accent);
+    border:none;
+    width:45px;
+    cursor:pointer;
+    font-size:18px;
+  }
+  .search-btn:hover{background:var(--accent2);}
+
+  .nav-item{
+    padding:8px;
+    border:1px solid transparent;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:13px;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .nav-item:hover{border-color:#fff;}
+  .nav-item small{display:block;font-size:11px;color:#ccc;}
+  .nav-item b{font-size:14px;}
+
+  .cart{
+    display:flex;
+    align-items:flex-end;
+    gap:4px;
+    padding:8px;
+    border:1px solid transparent;
+    border-radius:3px;
+    cursor:pointer;
+    position:relative;
+  }
+  .cart:hover{border-color:#fff;}
+  .cart-count{
+    font-weight:700;
+    color:var(--accent);
+    font-size:18px;
+    position:absolute;
+    top:-2px;
+    left:14px;
+  }
+  .cart-icon{font-size:30px;}
+  .cart-label{font-size:14px;font-weight:700;align-self:flex-end;}
+
+  /* ---------- SUBNAV ---------- */
+  nav.subnav{
+    background: var(--dark2);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:6px 12px;
+    font-size:13px;
+    overflow-x:auto;
+  }
+  nav.subnav .item{
+    padding:6px 8px;
+    border:1px solid transparent;
+    border-radius:3px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  nav.subnav .item:hover{border-color:#fff;}
+  nav.subnav .item.all{font-weight:700;display:flex;align-items:center;gap:4px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background: linear-gradient(180deg,#e3e6e6 0%, #eaeded 60%);
+  }
+  .hero-banner{
+    height:280px;
+    background: linear-gradient(120deg,#232f3e,#37475a 60%, #febd69);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    text-align:center;
+    flex-direction:column;
+    gap:8px;
+  }
+  .hero-banner h1{font-size:38px;letter-spacing:1px;}
+  .hero-banner p{font-size:16px;opacity:.9;}
+  .hero-fade{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    height:100px;
+    background:linear-gradient(180deg, rgba(234,237,237,0), rgba(234,237,237,1));
+  }
+
+  /* ---------- CONTENT ---------- */
+  .content{
+    max-width:1500px;
+    margin:-140px auto 0;
+    padding:0 16px 40px;
+    position:relative;
+    z-index:2;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap:16px;
+    margin-bottom:16px;
+  }
+  .card{
+    background:#fff;
+    padding:18px;
+    border-radius:4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+  .card h2{
+    font-size:19px;
+    margin-bottom:12px;
+  }
+  .card-grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .card-grid2 img{
+    width:100%;
+    height:110px;
+    object-fit:cover;
+    border-radius:2px;
+    background:#f0f0f0;
+  }
+  .card-grid2 span{font-size:12px;margin-top:4px;display:block;}
+  .card .shop-link{
+    display:block;
+    margin-top:14px;
+    color:var(--blue);
+    font-size:13px;
+  }
+  .card .shop-link:hover{color:#c7511f;text-decoration:underline;}
+
+  .card-single img{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:2px;
+    margin-bottom:10px;
+    background:#f0f0f0;
+  }
+
+  /* ---------- PRODUCTS ---------- */
+  .section-title{
+    font-size:22px;
+    margin: 30px 0 14px;
+  }
+  .products{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    gap:16px;
+  }
+  .product-card{
+    background:#fff;
+    border-radius:4px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
+    transition: box-shadow .15s ease;
+  }
+  .product-card:hover{box-shadow:0 4px 10px rgba(0,0,0,.18);}
+  .product-img{
+    height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:12px;
+    background:#f7f7f7;
+    border-radius:4px;
+    font-size:60px;
+  }
+  .product-title{
+    font-size:14px;
+    color:var(--blue);
+    margin-bottom:6px;
+    min-height:36px;
+  }
+  .product-title:hover{color:#c7511f;text-decoration:underline;cursor:pointer;}
+  .stars{color:#ffa41c;font-size:14px;margin-bottom:4px;}
+  .stars small{color:var(--blue);margin-left:4px;}
+  .price{
+    font-size:22px;
+    margin-bottom:2px;
+  }
+  .price sup{font-size:13px;position:relative;top:-8px;}
+  .price-old{
+    font-size:12px;
+    color:#565959;
+    text-decoration:line-through;
+  }
+  .prime-badge{
+    font-size:11px;
+    color:#007185;
+    margin-bottom:8px;
+  }
+  .add-btn{
+    margin-top:auto;
+    background:var(--accent);
+    border:1px solid #a88734;
+    border-radius:20px;
+    padding:8px 10px;
+    font-size:13px;
+    cursor:pointer;
+    font-weight:500;
+  }
+  .add-btn:hover{background:var(--accent2);}
+  .add-btn.added{
+    background:var(--success);
+    color:#fff;
+    border-color:var(--success);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--dark2);
+    color:#ddd;
+    margin-top:40px;
+  }
+  .footer-top{
+    text-align:center;
+    padding:16px;
+    background:#37475a;
+    cursor:pointer;
+    font-size:13px;
+  }
+  .footer-top:hover{background:#485769;}
+  .footer-main{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    max-width:1200px;
+    margin:0 auto;
+    padding:40px 20px;
+  }
+  .footer-main h3{
+    font-size:15px;
+    margin-bottom:12px;
+    color:#fff;
+  }
+  .footer-main li{
+    font-size:13px;
+    margin-bottom:8px;
+    cursor:pointer;
+    color:#ddd;
+  }
+  .footer-main li:hover{text-decoration:underline;}
+  .footer-bottom{
+    border-top:1px solid #3a4553;
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+    color:#aaa;
+  }
+
+  /* ---------- CART DRAWER ---------- */
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.4);
+    display:none;
+    z-index:50;
+  }
+  .overlay.open{display:block;}
+  .drawer{
+    position:fixed;
+    top:0;right:-380px;
+    width:360px;
+    max-width:90vw;
+    height:100%;
+    background:#fff;
+    z-index:60;
+    display:flex;
+    flex-direction:column;
+    transition:right .25s ease;
+    box-shadow:-2px 0 10px rgba(0,0,0,.2);
+  }
+  .drawer.open{right:0;}
+  .drawer-header{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .drawer-header h2{font-size:18px;}
+  .drawer-header button{
+    background:none;border:none;font-size:22px;cursor:pointer;
+  }
+  .drawer-body{
+    flex:1;
+    overflow-y:auto;
+    padding:16px;
+  }
+  .drawer-item{
+    display:flex;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    align-items:center;
+  }
+  .drawer-item .emoji{font-size:34px;width:50px;text-align:center;}
+  .drawer-item .info{flex:1;}
+  .drawer-item .info .name{font-size:13px;margin-bottom:4px;}
+  .drawer-item .info .qty-row{
+    display:flex;align-items:center;gap:8px;font-size:13px;
+  }
+  .qty-row button{
+    width:22px;height:22px;
+    border:1px solid var(--border);
+    background:#f0f2f2;
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .drawer-item .remove{
+    font-size:12px;color:var(--blue);cursor:pointer;
+  }
+  .drawer-item .remove:hover{color:#c7511f;text-decoration:underline;}
+  .drawer-footer{
+    padding:16px;
+    border-top:1px solid var(--border);
+  }
+  .subtotal{
+    font-size:16px;
+    margin-bottom:12px;
+  }
+  .checkout-btn{
+    width:100%;
+    background:var(--accent);
+    border:1px solid #a88734;
+    border-radius:20px;
+    padding:10px;
+    font-size:14px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .checkout-btn:hover{background:var(--accent2);}
+  .empty-cart{
+    text-align:center;
+    color:#888;
+    padding:40px 10px;
+    font-size:14px;
+  }
+
+  .toast{
+    position:fixed;
+    bottom:20px;left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:#111;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:4px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition: all .25s ease;
+    z-index:100;
+  }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  @media (max-width:900px){
+    header.topbar{flex-wrap:wrap;}
+    .search-bar{order:5;flex-basis:100%;margin-top:8px;}
+    .content{margin-top:-100px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo" onclick="scrollToTop()">amaz<span>an</span></div>
+  <div class="deliver">
+    <span class="pin">📍</span>
+    <div class="deliver-text">
+      <div>Deliver to India</div>
+      <b>Update location</b>
+    </div>
+  </div>
+  <form class="search-bar" onsubmit="return handleSearch(event)">
+    <select class="search-select">
+      <option>All</option>
+      <option>Electronics</option>
+      <option>Fashion</option>
+      <option>Home</option>
+      <option>Books</option>
+    </select>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search amazan.com">
+    <button class="search-btn" type="submit">🔍</button>
+  </form>
+  <div class="nav-item">
+    <small>Hello, sign in</small>
+    <b>Account & Lists</b>
+  </div>
+  <div class="nav-item">
+    <small>Returns</small>
+    <b>& Orders</b>
+  </div>
+  <div class="cart" onclick="openCart()">
+    <span class="cart-icon">🛒</span>
+    <span class="cart-count" id="cartCount">0</span>
+    <span class="cart-label">Cart</span>
+  </div>
+</header>
+
+<nav class="subnav">
+  <div class="item all">☰ All</div>
+  <div class="item">Today's Deals</div>
+  <div class="item">Customer Service</div>
+  <div class="item">Registry</div>
+  <div class="item">Gift Cards</div>
+  <div class="item">Sell</div>
+  <div class="item">Electronics</div>
+  <div class="item">Fashion</div>
+  <div class="item">Home & Kitchen</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-banner">
+    <h1>Big Summer Sale</h1>
+    <p>Up to 60% off electronics, home goods & more</p>
+  </div>
+  <div class="hero-fade"></div>
+</div>
+
+<div class="content">
+
+  <div class="grid">
+    <div class="card">
+      <h2>Shop by category</h2>
+      <div class="card-grid2">
+        <div><img src="https://picsum.photos/seed/electronics/300/200" alt="Electronics"><span>Electronics</span></div>
+        <div><img src="https://picsum.photos/seed/fashion/300/200" alt="Fashion"><span>Fashion</span></div>
+        <div><img src="https://picsum.photos/seed/home/300/200" alt="Home"><span>Home & Kitchen</span></div>
+        <div><img src="https://picsum.photos/seed/toys/300/200" alt="Toys"><span>Toys & Games</span></div>
+      </div>
+      <a class="shop-link" href="#products">See more</a>
+    </div>
+
+    <div class="card">
+      <h2>Refresh your space</h2>
+      <div class="card-grid2">
+        <div><img src="https://picsum.photos/seed/decor1/300/200" alt=""><span>Wall decor</span></div>
+        <div><img src="https://picsum.photos/seed/decor2/300/200" alt=""><span>Lighting</span></div>
+        <div><img src="https://picsum.photos/seed/decor3/300/200" alt=""><span>Storage</span></div>
+        <div><img src="https://picsum.photos/seed/decor4/300/200" alt=""><span>Furniture</span></div>
+      </div>
+      <a class="shop-link" href="#products">Shop the look</a>
+    </div>
+
+    <div class="card">
+      <h2>Top deal</h2>
+      <div class="card-single">
+        <img src="https://picsum.photos/seed/deal/500/300" alt="Deal">
+      </div>
+      <a class="shop-link" href="#products">Shop deals</a>
+    </div>
+
+    <div class="card">
+      <h2>Sign in for the best experience</h2>
+      <p style="font-size:13px;margin-bottom:12px;color:#565959;">Track orders, get recommendations & more.</p>
+      <button class="add-btn" onclick="alert('This is a demo clone — no real sign in.')">Sign in securely</button>
+    </div>
+  </div>
+
+  <h2 class="section-title" id="products">Recommended for you</h2>
+  <div class="products" id="productGrid"></div>
+</div>
+
+<footer>
+  <div class="footer-top" onclick="scrollToTop()">Back to top</div>
+  <div class="footer-main">
+    <div>
+      <h3>Get to Know Us</h3>
+      <ul>
+        <li>About Us</li>
+        <li>Careers</li>
+        <li>Press Releases</li>
+        <li>Amazan Science</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Connect with Us</h3>
+      <ul>
+        <li>Facebook</li>
+        <li>Twitter</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Make Money with Us</h3>
+      <ul>
+        <li>Sell on Amazan</li>
+        <li>Become an Affiliate</li>
+        <li>Advertise Your Products</li>
+        <li>Self-Publish</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Let Us Help You</h3>
+      <ul>
+        <li>Your Account</li>
+        <li>Returns Centre</li>
+        <li>Shipping Rates & Policies</li>
+        <li>Help</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    This is a static front-end clone built for learning purposes only — not affiliated with Amazon.com, Inc.
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h2>Your Cart</h2>
+    <button onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-footer">
+    <div class="subtotal">Subtotal: <b id="subtotal">₹0</b></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ---------------- PRODUCT DATA ----------------
+  const products = [
+    { id: 1, name: "Wireless Bluetooth Headphones, Over-Ear, 40H Battery", emoji: "🎧", price: 1799, oldPrice: 2999, rating: 4.3, reviews: 2140 },
+    { id: 2, name: "Stainless Steel Insulated Water Bottle, 1L", emoji: "🧴", price: 499, oldPrice: 799, rating: 4.5, reviews: 5602 },
+    { id: 3, name: "Mechanical Gaming Keyboard, RGB Backlit", emoji: "⌨️", price: 2399, oldPrice: 3499, rating: 4.4, reviews: 987 },
+    { id: 4, name: "Smart Fitness Band with Heart Rate Monitor", emoji: "⌚", price: 1299, oldPrice: 2199, rating: 4.1, reviews: 3305 },
+    { id: 5, name: "Non-Stick Cookware Set, 5 Pieces", emoji: "🍳", price: 2199, oldPrice: 3299, rating: 4.6, reviews: 812 },
+    { id: 6, name: "Cotton Bedsheet Set with 2 Pillow Covers", emoji: "🛏️", price: 899, oldPrice: 1499, rating: 4.2, reviews: 1543 },
+    { id: 7, name: "Portable Bluetooth Speaker, Waterproof", emoji: "🔊", price: 1499, oldPrice: 2499, rating: 4.4, reviews: 2789 },
+    { id: 8, name: "Ergonomic Office Chair with Lumbar Support", emoji: "🪑", price: 6499, oldPrice: 8999, rating: 4.0, reviews: 421 },
+    { id: 9, name: "Kids' Building Blocks Set, 250 Pieces", emoji: "🧱", price: 799, oldPrice: 1199, rating: 4.7, reviews: 964 },
+    { id: 10, name: "USB-C Fast Charging Cable, 6ft (Pack of 2)", emoji: "🔌", price: 349, oldPrice: 599, rating: 4.3, reviews: 6721 },
+    { id: 11, name: "Yoga Mat with Carry Strap, Non-Slip", emoji: "🧘", price: 649, oldPrice: 999, rating: 4.5, reviews: 1876 },
+    { id: 12, name: "Stainless Steel Chef's Knife, 8-inch", emoji: "🔪", price: 999, oldPrice: 1599, rating: 4.6, reviews: 703 },
+  ];
+
+  let cart = {}; // { id: qty }
+
+  function formatPrice(n){
+    return "₹" + n.toLocaleString('en-IN');
+  }
+
+  function renderStars(rating){
+    const full = Math.floor(rating);
+    const half = rating - full >= 0.5;
+    let str = "★".repeat(full);
+    if(half) str += "☆";
+    str += "☆".repeat(5 - full - (half ? 1 : 0));
+    return str;
+  }
+
+  function renderProducts(){
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-img">${p.emoji}</div>
+        <div class="product-title">${p.name}</div>
+        <div class="stars">${renderStars(p.rating)} <small>${p.reviews.toLocaleString('en-IN')}</small></div>
+        <div class="price"><sup>₹</sup>${p.price.toLocaleString('en-IN')}</div>
+        <div class="price-old">M.R.P.: ${formatPrice(p.oldPrice)}</div>
+        <div class="prime-badge">✔ prime | FREE delivery</div>
+        <button class="add-btn" id="btn-${p.id}" onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    `).join('');
+  }
+
+  function addToCart(id){
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartUI();
+    const btn = document.getElementById('btn-' + id);
+    btn.textContent = "Added ✓";
+    btn.classList.add('added');
+    setTimeout(() => {
+      btn.textContent = "Add to Cart";
+      btn.classList.remove('added');
+    }, 1200);
+    showToast(products.find(p => p.id === id).name.slice(0, 30) + "… added to cart");
+  }
+
+  function changeQty(id, delta){
+    if(!cart[id]) return;
+    cart[id] += delta;
+    if(cart[id] <= 0) delete cart[id];
+    updateCartUI();
+  }
+
+  function removeFromCart(id){
+    delete cart[id];
+    updateCartUI();
+  }
+
+  function updateCartUI(){
+    const totalCount = Object.values(cart).reduce((a,b) => a+b, 0);
+    document.getElementById('cartCount').textContent = totalCount;
+
+    const body = document.getElementById('drawerBody');
+    const ids = Object.keys(cart);
+    if(ids.length === 0){
+      body.innerHTML = `<div class="empty-cart">Your cart is empty.<br>Start adding some great deals!</div>`;
+    } else {
+      body.innerHTML = ids.map(id => {
+        const p = products.find(p => p.id == id);
+        const qty = cart[id];
+        return `
+          <div class="drawer-item">
+            <div class="emoji">${p.emoji}</div>
+            <div class="info">
+              <div class="name">${p.name}</div>
+              <div class="qty-row">
+                <button onclick="changeQty(${p.id}, -1)">−</button>
+                <span>${qty}</span>
+                <button onclick="changeQty(${p.id}, 1)">+</button>
+                <b style="margin-left:8px;">${formatPrice(p.price * qty)}</b>
+              </div>
+              <div class="remove" onclick="removeFromCart(${p.id})">Delete</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    const subtotal = ids.reduce((sum, id) => sum + products.find(p => p.id == id).price * cart[id], 0);
+    document.getElementById('subtotal').textContent = formatPrice(subtotal);
+  }
+
+  function openCart(){
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+  }
+  function closeCart(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+
+  function checkout(){
+    const totalCount = Object.values(cart).reduce((a,b) => a+b, 0);
+    if(totalCount === 0){
+      showToast("Your cart is empty");
+      return;
+    }
+    alert("This is a demo clone — checkout isn't connected to a real payment system.");
+  }
+
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  function handleSearch(e){
+    e.preventDefault();
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    if(!q){ document.getElementById('products').scrollIntoView({behavior:'smooth'}); return false; }
+    const cards = document.querySelectorAll('.product-card');
+    const grid = document.getElementById('productGrid');
+    const filtered = products.filter(p => p.name.toLowerCase().includes(q));
+    if(filtered.length === 0){
+      grid.innerHTML = `<div class="empty-cart" style="grid-column:1/-1;">No results found for "${q}"</div>`;
+    } else {
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card">
+          <div class="product-img">${p.emoji}</div>
+          <div class="product-title">${p.name}</div>
+          <div class="stars">${renderStars(p.rating)} <small>${p.reviews.toLocaleString('en-IN')}</small></div>
+          <div class="price"><sup>₹</sup>${p.price.toLocaleString('en-IN')}</div>
+          <div class="price-old">M.R.P.: ${formatPrice(p.oldPrice)}</div>
+          <div class="prime-badge">✔ prime | FREE delivery</div>
+          <button class="add-btn" id="btn-${p.id}" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      `).join('');
+    }
+    document.getElementById('products').scrollIntoView({behavior:'smooth'});
+    return false;
+  }
+
+  function scrollToTop(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  renderProducts();
+  updateCartUI();
+</script>
+
+</body>
+</html>
